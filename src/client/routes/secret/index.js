@@ -2,11 +2,9 @@ import React from 'react';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import isBase64 from 'is-base64';
+import { Button, Input, Textarea } from '@mantine/core';
 
 import Wrapper from '../../components/wrapper';
-import Input from '../../components/form/input';
-import Textarea from '../../components/form/textarea';
-import Button from '../../components/form/button';
 import Error from '../../components/info/error';
 import Info from '../../components/info/info';
 
@@ -112,7 +110,7 @@ const Secret = () => {
 
                 <Info>We will only show the secret once.</Info>
 
-                {isSecretOpen && <Textarea thickBorder={true} value={secret} readOnly></Textarea>}
+                {isSecretOpen && <Textarea variant="filled" value={secret} readOnly></Textarea>}
 
                 {isPasswordRequired && !isSecretOpen && (
                     <>
@@ -127,17 +125,17 @@ const Secret = () => {
                 )}
 
                 {!isSecretOpen && (
-                    <Button buttonType="create" onClick={fetchSecret} full>
+                    <Button color="teal" onClick={fetchSecret} fullWidth>
                         View secret
                     </Button>
                 )}
                 {isBase64Content && (
-                    <Button buttonType="create" onClick={convertBase64ToPlain} full>
+                    <Button color="teal" onClick={convertBase64ToPlain} fullWidth>
                         Convert base64 to plain text
                     </Button>
                 )}
                 {file && !isDownloaded && (
-                    <Button buttonType="burn" onClick={onFileDownload} full>
+                    <Button color="teal" variant="outline" onClick={onFileDownload} fullWidth>
                         Download the secret file
                     </Button>
                 )}

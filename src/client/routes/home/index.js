@@ -1,13 +1,11 @@
 import React from 'react';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import style from './style.module.css';
+
+import { Button, Input, Select, Textarea } from '@mantine/core';
 
 import Wrapper from '../../components/wrapper';
 import InputGroup from '../../components/form/input-group';
-import Input from '../../components/form/input';
-import Textarea from '../../components/form/textarea';
-import Select from '../../components/form/select';
-import Button from '../../components/form/button';
 import Error from '../../components/info/error';
 import Info from '../../components/info/info';
 import Share from '../../components/share';
@@ -31,20 +29,12 @@ const Home = () => {
 
     const [error, setError] = useState('');
 
-    const secretRef = useRef(null);
-
     useEffect(() => {
         // Run once to initialize the form data to post
         setFormData(new FormData());
 
         setIsLoggedIn(hasToken());
     }, []);
-
-    useEffect(() => {
-        if (secretId) {
-            secretRef.current.focus();
-        }
-    }, [secretId]);
 
     const onTextareChange = (event) => {
         setText(event.target.value);
@@ -59,10 +49,6 @@ const Home = () => {
         const [file] = event.target.files;
 
         setFile(file);
-    };
-
-    const onSelectChange = (event) => {
-        setTTL(event.target.value);
     };
 
     const onPasswordChange = (event) => {
@@ -129,8 +115,6 @@ const Home = () => {
         reset();
     };
 
-    const handleFocus = (event) => event.target.select();
-
     const getSecretURL = () => `${window.location.href}secret/${encryptionKey}/${secretId}`;
 
     const inputReadOnly = !!secretId;
@@ -152,10 +136,12 @@ const Home = () => {
                         onChange={onTextareChange}
                         value={text}
                         readOnly={inputReadOnly}
-                        thickBorder={inputReadOnly}
+                        variant={inputReadOnly ? 'filled' : ''}
                         onFocus={onTextareaActive}
                         onBlur={onTextareaActive}
-                        isActive={isTextActive}
+                        autosize
+                        minRows={4}
+                        maxRows={12}
                     />
 
                     {!isLoggedIn && (
@@ -172,21 +158,26 @@ const Home = () => {
                     />
 
                     <InputGroup>
-                        <Select value={ttl} onChange={onSelectChange}>
-                            <option value="604800">7 days</option>
-                            <option value="259200">3 days</option>
-                            <option value="86400">1 day</option>
-                            <option value="43200">12 hours</option>
-                            <option value="14400">4 hours</option>
-                            <option value="3600">1 hour</option>
-                            <option value="1800">30 minutes</option>
-                            <option value="300">5 minutes</option>
-                        </Select>
+                        <Select
+                            value={ttl}
+                            onChange={setTTL}
+                            data={[
+                                { value: 604800, label: '7 days' },
+                                { value: 259200, label: '3 days' },
+                                { value: 86400, label: '1 day' },
+                                { value: 43200, label: '12 hours' },
+                                { value: 14400, label: '4 hours' },
+                                { value: 3600, label: '1 hour' },
+                                { value: 1800, label: '30 minutes' },
+                                { value: 300, label: '5 minutes' },
+                            ]}
+                        />
                         <Input
                             placeholder="Your optional password"
                             value={password}
                             onChange={onPasswordChange}
                             readOnly={inputReadOnly}
+                            variant={inputReadOnly ? 'filled' : ''}
                             style={{ WebkitTextSecurity: 'disc' }} // hack for password prompt
                         />
                     </InputGroup>
@@ -197,6 +188,7 @@ const Home = () => {
                             value={allowedIp}
                             onChange={onIpChange}
                             readOnly={inputReadOnly}
+                            variant={inputReadOnly ? 'filled' : ''}
                         />
                     </Expandable>
 
@@ -206,30 +198,30 @@ const Home = () => {
                                 <Share url={getSecretURL()}></Share>
                             </Info>
 
-                            <Input
-                                value={getSecretURL()}
-                                onFocus={handleFocus}
-                                ref={secretRef}
-                                readOnly
-                            />
+                            <Input value={getSecretURL()} readOnly />
                         </>
                     )}
 
                     <div className={style.buttonWrapper}>
                         {!secretId && (
-                            <Button buttonType="create" onClick={onSubmit}>
+                            <Button color="teal" onClick={onSubmit}>
                                 Create a secret link
                             </Button>
                         )}
 
                         {secretId && (
-                            <Button buttonType="create" onClick={onNewSecret}>
+                            <Button color="teal" onClick={onNewSecret}>
                                 Create a new secret
                             </Button>
                         )}
 
                         {secretId && (
-                            <Button buttonType="burn" onClick={onBurn} disabled={!secretId}>
+                            <Button
+                                color="teal"
+                                variant="outline"
+                                onClick={onBurn}
+                                disabled={!secretId}
+                            >
                                 Burn the secret
                             </Button>
                         )}

@@ -1,11 +1,11 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
+
+import { Button, Input } from '@mantine/core';
 import style from './style.module.css';
 
 import Wrapper from '../../components/wrapper';
-import Input from '../../components/form/input';
-import Button from '../../components/form/button';
 import Error from '../../components/info/error';
 import Info from '../../components/info/info';
 import Success from '../../components/info/success';
@@ -77,7 +77,7 @@ const Secret = () => {
                         />
 
                         <div className={style.buttonWrapper}>
-                            <Button buttonType="burn" onClick={onSignIn}>
+                            <Button variant="outline" color="teal" onClick={onSignIn}>
                                 Sign in
                             </Button>
                         </div>
