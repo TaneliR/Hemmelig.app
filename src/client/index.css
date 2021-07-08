@@ -14,9 +14,9 @@ body {
     width: 100%;
     padding: 0;
     margin: 0;
-    background: var(--color-background);
+
     font-weight: 400;
-    color: var(--color-font);
+
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
@@ -60,6 +60,12 @@ p {
 
 * {
     box-sizing: border-box;
+}
+
+#root,
+#app {
+    width: 100%;
+    height: 100%;
 }
 
 #app-inner {

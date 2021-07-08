@@ -2,10 +2,9 @@ import React from 'react';
 import { useEffect, useState } from 'react';
 import style from './style.module.css';
 
-import { Button, Input, Select, Textarea } from '@mantine/core';
+import { Button, Input, Select, Textarea, Group, Container } from '@mantine/core';
 
 import Wrapper from '../../components/wrapper';
-import InputGroup from '../../components/form/input-group';
 import Error from '../../components/info/error';
 import Info from '../../components/info/info';
 import Share from '../../components/share';
@@ -140,8 +139,8 @@ const Home = () => {
                         onFocus={onTextareaActive}
                         onBlur={onTextareaActive}
                         autosize
-                        minRows={4}
-                        maxRows={12}
+                        minRows={6}
+                        maxRows={16}
                     />
 
                     {!isLoggedIn && (
@@ -157,7 +156,7 @@ const Home = () => {
                         disabled={!isLoggedIn}
                     />
 
-                    <InputGroup>
+                    <Group position="apart" grow>
                         <Select
                             value={ttl}
                             onChange={setTTL}
@@ -180,7 +179,7 @@ const Home = () => {
                             variant={inputReadOnly ? 'filled' : ''}
                             style={{ WebkitTextSecurity: 'disc' }} // hack for password prompt
                         />
-                    </InputGroup>
+                    </Group>
 
                     <Expandable>
                         <Input

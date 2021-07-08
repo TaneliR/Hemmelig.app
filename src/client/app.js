@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Container } from '@mantine/core';
 
 import Header from './components/header';
 import Footer from './/components/footer';
@@ -17,7 +18,7 @@ const App = () => (
     <Router>
         <div id="app">
             <Header />
-            <div id="app-inner">
+            <Container>
                 <Switch>
                     <Route path="/secret/:encryptionKey/:secretId" exact>
                         <Secret />
@@ -41,7 +42,7 @@ const App = () => (
                         <Home />
                     </Route>
                 </Switch>
-            </div>
+            </Container>
             <Footer />
         </div>
     </Router>
